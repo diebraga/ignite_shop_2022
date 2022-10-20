@@ -3,13 +3,14 @@ import Head from "next/head";
 import { styled } from "../styles";
 
 const Button = styled("button", {
-  backgroundColor: "gainsboro",
+  backgroundColor: "$green300",
   borderRadius: "9999px",
   fontSize: "13px",
   padding: "10px 15px",
   border: 0,
+  color: "$white",
   "&:hover": {
-    backgroundColor: "lightgray",
+    backgroundColor: "$green500",
     cursor: "pointer",
   },
 });
