@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { HomeContainer, HomeProduct } from "../styles/pages/home";
@@ -53,7 +53,7 @@ const Home: NextPage<HomeProps> = ({ products }) => {
 
 export default Home;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response = await stripe.products.list({
     expand: ["data.default_price"],
   });
@@ -64,13 +64,15 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: price.unit_amount,
+      price: new Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: "EUR"
+      }).format(price.unit_amount as number / 100),
     };
   });
   return {
     props: {
       products,
     },
-    revalidate: 60 * 60 * 2,
   };
 };
