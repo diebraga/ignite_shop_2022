@@ -7,6 +7,7 @@ import { stripe } from "../lib/stripe";
 import Stripe from "stripe";
 
 import "keen-slider/keen-slider.min.css";
+import Link from "next/link";
 
 type ProductType = {
   id: string;
@@ -36,14 +37,16 @@ const Home: NextPage<HomeProps> = ({ products }) => {
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
           return (
-            <HomeProduct key={product.id} className="keen-slider__slide">
-              <Image src={product.imageUrl} width={520} height={480} alt="" />
+            <Link href={`/product/${product.id}`} key={product.id}>
+              <HomeProduct className="keen-slider__slide">
+                <Image src={product.imageUrl} width={520} height={480} alt="" />
 
-              <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
-              </footer>
-            </HomeProduct>
+                <footer>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </footer>
+              </HomeProduct>
+            </Link>
           );
         })}
       </HomeContainer>
@@ -66,8 +69,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       imageUrl: product.images[0],
       price: new Intl.NumberFormat("en-GB", {
         style: "currency",
-        currency: "EUR"
-      }).format(price.unit_amount as number / 100),
+        currency: "EUR",
+      }).format((price.unit_amount as number) / 100),
     };
   });
   return {
