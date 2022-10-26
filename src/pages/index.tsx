@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { HomeContainer, HomeProduct } from "../styles/pages/home";
@@ -9,7 +9,7 @@ import Stripe from "stripe";
 import "keen-slider/keen-slider.min.css";
 import Link from "next/link";
 
-type ProductType = {
+export type ProductType = {
   id: string;
   name: string;
   imageUrl: string;
@@ -37,7 +37,7 @@ const Home: NextPage<HomeProps> = ({ products }) => {
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
           return (
-            <Link href={`/product/${product.id}`} key={product.id}>
+            <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
               <HomeProduct className="keen-slider__slide">
                 <Image src={product.imageUrl} width={520} height={480} alt="" />
 
@@ -56,7 +56,7 @@ const Home: NextPage<HomeProps> = ({ products }) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const response = await stripe.products.list({
     expand: ["data.default_price"],
   });
@@ -77,5 +77,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       products,
     },
+    revalidate: 60 * 60 * 2,
   };
 };
