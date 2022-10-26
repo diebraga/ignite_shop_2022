@@ -56,5 +56,9 @@ export const ProductDetails = styled("div", {
     "&:hover": {
       background: "$green300",
     },
+    "&:not(:disabled)disabled": {
+      opacity: 0.6,
+      cursor: "not-allowed",
+    },
   },
 });

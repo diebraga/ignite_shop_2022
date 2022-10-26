@@ -1,7 +1,8 @@
+import axios from "axios";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import Stripe from "stripe";
 import { ProductType } from "..";
 import { stripe } from "../../lib/stripe";
@@ -14,10 +15,32 @@ import {
 type ProductProps = {
   product: ProductType;
   description: string;
+  defaultPriceId: string;
 };
 
-const Product: NextPage<ProductProps> = ({ description, product }) => {
+const Product: NextPage<ProductProps> = ({
+  description,
+  product,
+  defaultPriceId,
+}) => {
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const { isFallback } = useRouter();
+
+  const handleBuyProduct = async () => {
+    try {
+      setIsCheckoutLoading(true)
+      const response = await axios.post("/api/checkout", {
+        priceId: defaultPriceId,
+      });
+
+      const { checkoutUrl } = response.data;
+
+      window.location.href = checkoutUrl;
+    } catch (error: any) {
+      setIsCheckoutLoading(false)
+      alert("Error making checkout");
+    }
+  };
 
   if (isFallback) return <h1>Loading...</h1>;
   return (
@@ -36,7 +59,7 @@ const Product: NextPage<ProductProps> = ({ description, product }) => {
         <span>{product.price}</span>
 
         <p>{description}</p>
-        <button>Buy now</button>
+        <button disabled={isCheckoutLoading} onClick={handleBuyProduct}>Buy now</button>
       </ProductDetails>
     </ProductContainer>
   );
@@ -71,6 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         }).format((price.unit_amount as number) / 100),
       },
       description: product.description,
+      defaultPriceId: price.id,
     },
     revalidate: 60 * 60 * 1,
   };
