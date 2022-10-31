@@ -15,7 +15,7 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const success_url = `${process.env.APP_URL}/success`;
+  const success_url = `${process.env.APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`;
   const cancel_url = `${process.env.APP_URL}/`;
 
   const checkoutSession = await stripe.checkout.sessions.create({
