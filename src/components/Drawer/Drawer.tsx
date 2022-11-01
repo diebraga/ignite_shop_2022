@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDrawer from "react-modern-drawer";
+import { Button } from "../Button/Button";
+import { CloseButton, DrawerContainer, DrawerFooter, Heading } from "./styles";
 
 type DrawerProps = {
   drawerIsOpen: boolean;
@@ -12,8 +14,17 @@ const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer }) => {
       open={drawerIsOpen}
       onClose={toggleDrawer}
       direction="right"
-      style={{ width: "1000px", background: "#202024" }}
-    ></ReactDrawer>
+      style={{ width: "500px", background: "#202024" }}
+    >
+      <DrawerContainer>
+        <CloseButton>X</CloseButton>
+        <Heading>Your bag</Heading>
+
+        <DrawerFooter>
+          <Button />
+        </DrawerFooter>
+      </DrawerContainer>
+    </ReactDrawer>
   );
 };
 

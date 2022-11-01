@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Stripe from "stripe";
 import { ProductType } from "..";
+import { Button } from "../../components/Button/Button";
 import { stripe } from "../../lib/stripe";
 import {
   ImageContainer,
@@ -67,9 +68,9 @@ const Product: NextPage<ProductProps> = ({
           <span>{product.price}</span>
 
           <p>{description}</p>
-          <button disabled={isCheckoutLoading} onClick={handleBuyProduct}>
+          <Button isDisabled={isCheckoutLoading} onClick={handleBuyProduct}>
             Buy now
-          </button>
+          </Button>
         </ProductDetails>
       </ProductContainer>
     </>
