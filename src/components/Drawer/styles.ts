@@ -5,6 +5,7 @@ export const DrawerContainer = styled("div", {
   display: "flex",
   width: "100%",
   minHeight: "100%",
+  justifyItems: "center",
   // background: "red",
 });
 
@@ -25,9 +26,41 @@ export const CloseButton = styled("a", {
 
 export const DrawerFooter = styled("div", {
   display: "flex",
-  width: "100%",
+  width: "92%",
   flexDirection: "column",
   position: "absolute",
   bottom: 0,
-  // background: "red",
+  left: 0,
+
+  justifyItems: "center",
+  padding: 20,
+  marginRight: 20,
+});
+
+export const SummaryContainer = styled("div", {
+  display: "flex",
+  flexDirection: "column",
+});
+
+export const SummaryQuantity = styled("div", {
+  display: "flex",
+  width: "100%",
+  justifyContent: "space-between",
+
+  fontSize: "$md",
+  color: "$gray300",
+  fontWeight: 700,
+  marginBottom: 10,
+});
+
+export const SummaryTotal = styled("div", {
+  display: "flex",
+  width: "100%",
+  justifyContent: "space-between",
+
+  fontSize: "$lg",
+
+  color: "$white",
+  fontWeight: 700,
+  marginBottom: 40,
 });
