@@ -8,13 +8,22 @@ import {
   Heading,
   SummaryContainer,
   SummaryQuantity,
-  SummaryTotal
+  SummaryTotal,
+  DrawerContent,
+  ProductImage,
+  ProductContainer,
+  ProductDescription,
+  ProductName,
+  ProductPrice,
 } from "./styles";
+import Image from "next/image";
 
 type DrawerProps = {
   drawerIsOpen: boolean;
   toggleDrawer: () => void;
 };
+
+const items = Array.from(Array(10).keys());
 
 const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer }) => {
   return (
@@ -26,8 +35,34 @@ const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer }) => {
     >
       <DrawerContainer>
         <CloseButton>X</CloseButton>
-        <Heading>Your bag</Heading>
 
+        <DrawerContent>
+          <Heading>Items in your bag</Heading>
+
+          <div>
+            {items.map((item) => {
+              return (
+                <ProductContainer key={item}>
+                  <ProductImage>
+                    <Image
+                      src={"https://github.com/diebraga.png"}
+                      alt={""}
+                      width={100}
+                      height={100}
+                    />
+                  </ProductImage>
+                  <ProductDescription>
+                    <div>
+                      <ProductName>Camiseta bb 45</ProductName>
+                      <ProductPrice>£ 45</ProductPrice>
+                    </div>
+                    <a>Remove</a>
+                  </ProductDescription>
+                </ProductContainer>
+              );
+            })}
+          </div>
+        </DrawerContent>
         <DrawerFooter>
           <SummaryContainer>
             <SummaryQuantity>
