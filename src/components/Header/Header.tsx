@@ -6,9 +6,13 @@ import {
   PointNotification,
 } from "./styles";
 import Image from "next/image";
-import { OutlineBag } from "../../public/svg/OutlineBag";
+import { OutlineBag } from "../../../public/svg/OutlineBag";
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  toggleDrawer: () => void;
+};
+
+const Header: React.FC<HeaderProps> = ({ toggleDrawer }) => {
   return (
     <HeaderContainer>
       <Image width={150} height={150} src="/logo.svg" alt="" />
@@ -16,7 +20,7 @@ const Header: React.FC = () => {
         <PointNotification>
           <p>2</p>
         </PointNotification>
-        <BagLink>
+        <BagLink onClick={toggleDrawer}>
           <OutlineBag />
         </BagLink>
       </BagContainer>
