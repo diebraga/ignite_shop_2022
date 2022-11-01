@@ -15,6 +15,8 @@ export type ProductType = {
   name: string;
   imageUrl: string;
   price: number | null;
+  rawPrice: number;
+  key?: number;
 };
 
 type HomeProps = {

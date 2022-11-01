@@ -18,12 +18,14 @@ type ProductProps = {
   product: ProductType;
   description: string;
   defaultPriceId: string;
+  addToBag: () => void;
 };
 
 const Product: NextPage<ProductProps> = ({
   description,
   product,
   defaultPriceId,
+  addToBag,
 }) => {
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const { isFallback } = useRouter();
@@ -67,8 +69,12 @@ const Product: NextPage<ProductProps> = ({
           <span>{product.price}</span>
 
           <p>{description}</p>
-          <Button isDisabled={isCheckoutLoading} onClick={handleBuyProduct}>
-            Buy now
+          <Button
+            isDisabled={isCheckoutLoading}
+            // @ts-ignore
+            onClick={() => addToBag(product)}
+          >
+            Add to bag
           </Button>
         </ProductDetails>
       </ProductContainer>
@@ -97,6 +103,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           currency: "EUR",
         }).format((price.unit_amount as number) / 100),
       },
+      rawPrice: price.unit_amount as number,
       description: product.description,
       defaultPriceId: price.id,
     },

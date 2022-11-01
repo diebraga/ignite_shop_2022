@@ -10,16 +10,19 @@ import { OutlineBag } from "../../../public/svg/OutlineBag";
 
 type HeaderProps = {
   toggleDrawer: () => void;
+  bagCount: number;
 };
 
-const Header: React.FC<HeaderProps> = ({ toggleDrawer }) => {
+const Header: React.FC<HeaderProps> = ({ toggleDrawer, bagCount }) => {
   return (
     <HeaderContainer>
       <Image width={150} height={150} src="/logo.svg" alt="" />
       <BagContainer>
-        <PointNotification>
-          <p>2</p>
-        </PointNotification>
+        {bagCount > 0 && (
+          <PointNotification>
+            <p>{bagCount}</p>
+          </PointNotification>
+        )}
         <BagLink onClick={toggleDrawer}>
           <OutlineBag />
         </BagLink>
