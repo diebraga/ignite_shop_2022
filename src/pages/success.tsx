@@ -66,6 +66,14 @@ const Success: NextPage<SuccessProps> = ({ sessionID }) => {
 export default Success;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  if (!query.session_id) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   const sessionID = query.session_id as string;
 
   return {
