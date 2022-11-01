@@ -41,10 +41,9 @@ export const HomeProduct = styled("a", {
     transition: "all 0.2seg ease-in-out",
 
     strong: {
-      fontSize: "$lg",
-      color: "$gray100"
+      fontSize: "$mg",
+      color: "$gray100",
     },
-
     span: {
       fontSize: "$xl",
       fontWeight: "bold",

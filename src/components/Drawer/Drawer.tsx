@@ -34,7 +34,7 @@ const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer }) => {
       style={{ width: "500px", background: "#202024" }}
     >
       <DrawerContainer>
-        <CloseButton>X</CloseButton>
+        <CloseButton onClick={toggleDrawer}>X</CloseButton>
 
         <DrawerContent>
           <Heading>Items in your bag</Heading>

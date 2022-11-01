@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -44,7 +44,6 @@ const Product: NextPage<ProductProps> = ({
     }
   };
 
-  if (isFallback) return <h1>Loading...</h1>;
   return (
     <>
       <Head>
@@ -79,14 +78,7 @@ const Product: NextPage<ProductProps> = ({
 
 export default Product;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [{ params: { id: "prod_Mf4WxgkrTu2kku" } }],
-    fallback: true,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const productID = params?.id as string;
 
   const product = await stripe.products.retrieve(productID, {
@@ -108,6 +100,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       description: product.description,
       defaultPriceId: price.id,
     },
-    revalidate: 60 * 60 * 1,
   };
 };
