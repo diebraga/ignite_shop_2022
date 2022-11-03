@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { ProductType } from ".";
 import { formatPrice } from "../utils/formatPrice";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { v4 as uuid } from 'uuid';
 
 const Drawer = dynamic(() => import("../components/Drawer/Drawer"), {
   ssr: false,
@@ -42,14 +43,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       ...prev,
       {
         ...item,
-        key: bag.length,
+        key: uuid(),
       },
     ]);
   };
 
-  const removeFromBag = (key: number, rawPrice: number): void => {
+  const removeFromBag = (key: string, rawPrice: number): void => {
     setSumTotalPrice((prev) => prev - rawPrice);
-    setBag(bag.filter((item) => item.key !== key));
+    setBag(bag.filter((item) => String(item.key) !== String(key)));
   };
 
   return (

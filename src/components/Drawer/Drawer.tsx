@@ -26,7 +26,7 @@ type DrawerProps = {
   toggleDrawer: () => void;
   bag: ProductType[];
   totalPrice: string;
-  removeFromBag: (key: number, rawPrice: number) => void;
+  removeFromBag: (key: string, rawPrice: number) => void;
 };
 
 const Drawer: React.FC<DrawerProps> = ({
@@ -45,7 +45,6 @@ const Drawer: React.FC<DrawerProps> = ({
         .length,
     };
   });
-  console.log(_.uniqBy(formattedItemsList, "price"))
 
   const handleBuyProduct = async (): Promise<void> => {
     try {
@@ -96,7 +95,7 @@ const Drawer: React.FC<DrawerProps> = ({
                     </div>
                     <a
                       onClick={() =>
-                        removeFromBag(item.key as number, item.rawPrice)
+                        removeFromBag(String(item.key), item.rawPrice)
                       }
                     >
                       Remove

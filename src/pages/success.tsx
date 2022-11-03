@@ -27,7 +27,7 @@ const Success: NextPage<SuccessProps> = ({ sessionID }) => {
           sessionID,
         },
       });
-
+      console.log(response.data);
       setSuccessData(response.data);
     } catch (error) {
       console.log(error, "Error");
@@ -43,14 +43,14 @@ const Success: NextPage<SuccessProps> = ({ sessionID }) => {
       <h1>Success!</h1>
 
       <ImageContainer>
-        {successData.product?.imageUrl && (
+        {/* {successData.product?.imageUrl && (
           <Image
             src={successData.product?.imageUrl}
             width={120}
             height={110}
             alt={successData.product?.name}
           />
-        )}
+        )} */}
       </ImageContainer>
 
       <p>
@@ -82,3 +82,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   };
 };
+ 

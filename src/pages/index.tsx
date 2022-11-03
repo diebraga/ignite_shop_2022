@@ -16,7 +16,7 @@ export type ProductType = {
   imageUrl: string;
   price: number | null;
   rawPrice: number;
-  key?: number;
+  key?: string;
   defaultPriceId: number,
 };
 
