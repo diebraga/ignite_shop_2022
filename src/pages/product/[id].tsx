@@ -12,39 +12,19 @@ import {
   ProductContainer,
   ProductDetails,
 } from "../../styles/pages/product";
-import { formatPrice } from "../../styles/utils/formatPrice";
+import { formatPrice } from "../../utils/formatPrice";
 
 type ProductProps = {
   product: ProductType;
   description: string;
-  defaultPriceId: string;
   addToBag: () => void;
 };
 
 const Product: NextPage<ProductProps> = ({
   description,
   product,
-  defaultPriceId,
   addToBag,
 }) => {
-  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
-
-  const handleBuyProduct = async () => {
-    try {
-      setIsCheckoutLoading(true);
-      const response = await axios.post("/api/checkout", {
-        priceId: defaultPriceId,
-      });
-
-      const { checkoutUrl } = response.data;
-
-      window.location.href = checkoutUrl;
-    } catch (error: any) {
-      setIsCheckoutLoading(false);
-      alert("Error making checkout");
-    }
-  };
-
   return (
     <>
       <Head>
@@ -69,7 +49,6 @@ const Product: NextPage<ProductProps> = ({
 
           <p>{description}</p>
           <Button
-            isDisabled={isCheckoutLoading}
             // @ts-ignore
             onClick={() => addToBag(product)}
           >
@@ -99,9 +78,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         imageUrl: product.images[0],
         price: formatPrice(price.unit_amount as number),
         rawPrice: price.unit_amount as number,
+        defaultPriceId: price.id,
       },
       description: product.description,
-      defaultPriceId: price.id,
     },
   };
 };

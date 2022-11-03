@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDrawer from "react-modern-drawer";
 import { Button } from "../Button/Button";
 import {
@@ -18,6 +18,8 @@ import {
 } from "./styles";
 import Image from "next/image";
 import { ProductType } from "../../pages";
+import axios from "axios";
+import _ from "lodash";
 
 type DrawerProps = {
   drawerIsOpen: boolean;
@@ -34,6 +36,34 @@ const Drawer: React.FC<DrawerProps> = ({
   totalPrice,
   removeFromBag,
 }) => {
+  const [checkoutIsLoading, setIsCheckoutLoading] = useState(false);
+
+  const formattedItemsList = bag.map((item: ProductType) => {
+    return {
+      price: item.defaultPriceId,
+      quantity: bag.filter((filteredItem) => item.id === filteredItem.id)
+        .length,
+    };
+  });
+  console.log(_.uniqBy(formattedItemsList, "price"))
+
+  const handleBuyProduct = async (): Promise<void> => {
+    try {
+      setIsCheckoutLoading(true);
+      const response = await axios.post("/api/checkout", {
+        bag: _.uniqBy(formattedItemsList, "price"),
+      });
+
+      const { checkoutUrl } = response.data;
+
+      window.location.href = checkoutUrl;
+    } catch (error: any) {
+      setIsCheckoutLoading(false);
+      alert("Error making checkout");
+      console.log(error);
+    }
+  };
+
   return (
     <ReactDrawer
       open={drawerIsOpen}
@@ -64,7 +94,11 @@ const Drawer: React.FC<DrawerProps> = ({
                       <ProductName>{item.name}</ProductName>
                       <ProductPrice>{item.price}</ProductPrice>
                     </div>
-                    <a onClick={() => removeFromBag(item.key as number, item.rawPrice)}>
+                    <a
+                      onClick={() =>
+                        removeFromBag(item.key as number, item.rawPrice)
+                      }
+                    >
                       Remove
                     </a>
                   </ProductDescription>
@@ -84,7 +118,9 @@ const Drawer: React.FC<DrawerProps> = ({
               <p>{totalPrice}</p>
             </SummaryTotal>
           </SummaryContainer>
-          <Button>Buy now</Button>
+          <Button isDisabled={checkoutIsLoading} onClick={handleBuyProduct}>
+            Pay now
+          </Button>
         </DrawerFooter>
       </DrawerContainer>
     </ReactDrawer>

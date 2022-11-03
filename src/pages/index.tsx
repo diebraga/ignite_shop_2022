@@ -17,6 +17,7 @@ export type ProductType = {
   price: number | null;
   rawPrice: number;
   key?: number;
+  defaultPriceId: number,
 };
 
 type HomeProps = {

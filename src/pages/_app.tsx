@@ -8,7 +8,7 @@ import "react-modern-drawer/dist/index.css";
 
 import dynamic from "next/dynamic";
 import { ProductType } from ".";
-import { formatPrice } from "../styles/utils/formatPrice";
+import { formatPrice } from "../utils/formatPrice";
 
 const Drawer = dynamic(() => import("../components/Drawer/Drawer"), {
   ssr: false,

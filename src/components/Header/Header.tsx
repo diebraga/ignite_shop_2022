@@ -7,6 +7,7 @@ import {
 } from "./styles";
 import Image from "next/image";
 import { OutlineBag } from "../../../public/svg/OutlineBag";
+import Link from "next/link";
 
 type HeaderProps = {
   toggleDrawer: () => void;
@@ -16,7 +17,15 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ toggleDrawer, bagCount }) => {
   return (
     <HeaderContainer>
-      <Image width={150} height={150} src="/logo.svg" alt="" />
+      <Link href="/">
+        <Image
+          style={{ cursor: "pointer" }}
+          width={150}
+          height={150}
+          src="/logo.svg"
+          alt=""
+        />
+      </Link>
       <BagContainer>
         {bagCount > 0 && (
           <PointNotification>
