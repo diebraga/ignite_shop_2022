@@ -18,19 +18,17 @@ globalStyles();
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [bag, setBag] = useState<ProductType[]>([]);
-  const [bagCount, setCount] = useState(0);
-  const [sumTotalPrice, setSumTotalPrice] = useState(0);
-  console.log(bag);
+  const [bagCount, setCount] = useState<number>(0);
+  const [sumTotalPrice, setSumTotalPrice] = useState<number>(0);
 
-  console.log(formatPrice(sumTotalPrice));
-  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
 
-  const toggleDrawer = () => {
+  const toggleDrawer = (): void => {
     setDrawerIsOpen((prevState) => !prevState);
     setCount(0);
   };
 
-  const addToBag = (item: ProductType) => {
+  const addToBag = (item: ProductType): void => {
     setCount((prev) => prev + 1);
     setSumTotalPrice((prev) => prev + item.rawPrice);
     setBag((prev) => [
@@ -42,6 +40,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     ]);
   };
 
+  const removeFromBag = (key: number, rawPrice: number): void => {
+    setSumTotalPrice((prev) => prev - rawPrice);
+    setBag(bag.filter((item) => item.key !== key));
+  };
+
   return (
     <Container>
       <Drawer
@@ -49,6 +52,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         toggleDrawer={toggleDrawer}
         bag={bag}
         totalPrice={formatPrice(sumTotalPrice)}
+        removeFromBag={removeFromBag}
       />
       <Header toggleDrawer={toggleDrawer} bagCount={bagCount} />
       <Component {...pageProps} addToBag={addToBag} />

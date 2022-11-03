@@ -24,9 +24,16 @@ type DrawerProps = {
   toggleDrawer: () => void;
   bag: ProductType[];
   totalPrice: string;
+  removeFromBag: (key: number, rawPrice: number) => void;
 };
 
-const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer, bag, totalPrice }) => {
+const Drawer: React.FC<DrawerProps> = ({
+  drawerIsOpen,
+  toggleDrawer,
+  bag,
+  totalPrice,
+  removeFromBag,
+}) => {
   return (
     <ReactDrawer
       open={drawerIsOpen}
@@ -57,7 +64,9 @@ const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer, bag, totalP
                       <ProductName>{item.name}</ProductName>
                       <ProductPrice>{item.price}</ProductPrice>
                     </div>
-                    <a>Remove</a>
+                    <a onClick={() => removeFromBag(item.key as number, item.rawPrice)}>
+                      Remove
+                    </a>
                   </ProductDescription>
                 </ProductContainer>
               );
@@ -75,7 +84,7 @@ const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer, bag, totalP
               <p>{totalPrice}</p>
             </SummaryTotal>
           </SummaryContainer>
-          <Button />
+          <Button>Buy now</Button>
         </DrawerFooter>
       </DrawerContainer>
     </ReactDrawer>
