@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 import { ProductType } from ".";
 import { formatPrice } from "../utils/formatPrice";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 const Drawer = dynamic(() => import("../components/Drawer/Drawer"), {
   ssr: false,
@@ -53,6 +53,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     setBag(bag.filter((item) => String(item.key) !== String(key)));
   };
 
+  const emptyBag = (): void => {
+    setSumTotalPrice(0);
+    setBag([]);
+  };
+
   return (
     <Container>
       <Drawer
@@ -63,7 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         removeFromBag={removeFromBag}
       />
       <Header toggleDrawer={toggleDrawer} bagCount={bagCount} />
-      <Component {...pageProps} addToBag={addToBag} />
+      <Component {...pageProps} addToBag={addToBag} emptyBag={emptyBag} />
     </Container>
   );
 }

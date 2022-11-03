@@ -7,17 +7,18 @@ import Image from "next/image";
 
 type SuccessProps = {
   sessionID: string;
+  emptyBag: () => void;
 };
 
 type SuccessData = {
   costumerName: string;
-  product: {
-    imageUrl: string;
-    name: string;
-  };
+  products: {
+    image: string;
+    productName: string;
+  }[];
 };
 
-const Success: NextPage<SuccessProps> = ({ sessionID }) => {
+const Success: NextPage<SuccessProps> = ({ sessionID, emptyBag }) => {
   const [successData, setSuccessData] = useState({} as SuccessData);
 
   const fetchSession = async (): Promise<void> => {
@@ -27,7 +28,6 @@ const Success: NextPage<SuccessProps> = ({ sessionID }) => {
           sessionID,
         },
       });
-      console.log(response.data);
       setSuccessData(response.data);
     } catch (error) {
       console.log(error, "Error");
@@ -36,6 +36,7 @@ const Success: NextPage<SuccessProps> = ({ sessionID }) => {
 
   useEffect(() => {
     fetchSession();
+    emptyBag();
   }, []);
 
   return (
@@ -43,19 +44,12 @@ const Success: NextPage<SuccessProps> = ({ sessionID }) => {
       <h1>Success!</h1>
 
       <ImageContainer>
-        {/* {successData.product?.imageUrl && (
-          <Image
-            src={successData.product?.imageUrl}
-            width={120}
-            height={110}
-            alt={successData.product?.name}
-          />
-        )} */}
       </ImageContainer>
 
       <p>
-        Uhuu! <strong>{successData.costumerName}</strong>, your{" "}
-        <strong>{successData.product?.name}</strong> will be in your home soon!
+        Uhuu! <strong>{successData?.costumerName}</strong>, your{" "}
+        <strong>Your {successData.products?.length} T-shirts</strong> are going to be in your home
+        soon!
       </p>
 
       <Link href="/">Buy more</Link>
@@ -82,4 +76,3 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   };
 };
- 
