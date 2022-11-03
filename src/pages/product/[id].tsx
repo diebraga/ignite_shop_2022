@@ -2,7 +2,6 @@ import axios from "axios";
 import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Stripe from "stripe";
 import { ProductType } from "..";
@@ -13,6 +12,7 @@ import {
   ProductContainer,
   ProductDetails,
 } from "../../styles/pages/product";
+import { formatPrice } from "../../styles/utils/formatPrice";
 
 type ProductProps = {
   product: ProductType;
@@ -28,7 +28,6 @@ const Product: NextPage<ProductProps> = ({
   addToBag,
 }) => {
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
-  const { isFallback } = useRouter();
 
   const handleBuyProduct = async () => {
     try {
@@ -98,12 +97,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        price: new Intl.NumberFormat("en-GB", {
-          style: "currency",
-          currency: "EUR",
-        }).format((price.unit_amount as number) / 100),
+        price: formatPrice(price.unit_amount as number),
+        rawPrice: price.unit_amount as number,
       },
-      rawPrice: price.unit_amount as number,
       description: product.description,
       defaultPriceId: price.id,
     },

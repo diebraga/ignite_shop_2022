@@ -2,12 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import { stripe } from "../../lib/stripe";
 
-export type ProductType = {};
-export type SessionType = {
-  line_items: {
-    // data:
-  };
-};
 const success = async (req: NextApiRequest, res: NextApiResponse) => {
   const { sessionID } = req.query;
 

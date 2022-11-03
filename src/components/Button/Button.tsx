@@ -10,11 +10,12 @@ interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({
   isDisabled = false,
   onClick,
+  children,
   ...props
 }) => {
   return (
     <ButtonContainer disabled={isDisabled} {...props} onClick={onClick}>
-      Buy Now
+      {children}
     </ButtonContainer>
   );
 };

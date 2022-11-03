@@ -23,13 +23,10 @@ type DrawerProps = {
   drawerIsOpen: boolean;
   toggleDrawer: () => void;
   bag: ProductType[];
+  totalPrice: string;
 };
 
-const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer, bag }) => {
-  const sumTotal = bag.reduce((prev, cur) => {
-    return prev + cur.rawPrice;
-  }, 0);
-
+const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer, bag, totalPrice }) => {
   return (
     <ReactDrawer
       open={drawerIsOpen}
@@ -75,7 +72,7 @@ const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer, bag }) => {
             </SummaryQuantity>
             <SummaryTotal>
               <p>Total Price</p>
-              <p>{String(bag.reduce((n, { rawPrice }) => n + rawPrice, 0))}</p>
+              <p>{totalPrice}</p>
             </SummaryTotal>
           </SummaryContainer>
           <Button />
@@ -85,4 +82,4 @@ const Drawer: React.FC<DrawerProps> = ({ drawerIsOpen, toggleDrawer, bag }) => {
   );
 };
 
-export { Drawer };
+export default Drawer;

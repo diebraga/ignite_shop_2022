@@ -64,9 +64,9 @@ const Home: NextPage<HomeProps> = ({ products }) => {
                       {product.price}
                     </span>
                   </div>
-                  <a>
+                  <>
                     <FilledBag />
-                  </a>
+                  </>
                 </footer>
               </HomeProduct>
             </Link>
