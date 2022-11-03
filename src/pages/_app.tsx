@@ -9,6 +9,7 @@ import "react-modern-drawer/dist/index.css";
 import dynamic from "next/dynamic";
 import { ProductType } from ".";
 import { formatPrice } from "../utils/formatPrice";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const Drawer = dynamic(() => import("../components/Drawer/Drawer"), {
   ssr: false,
@@ -17,9 +18,15 @@ const Drawer = dynamic(() => import("../components/Drawer/Drawer"), {
 globalStyles();
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [bag, setBag] = useState<ProductType[]>([]);
-  const [bagCount, setCount] = useState<number>(0);
-  const [sumTotalPrice, setSumTotalPrice] = useState<number>(0);
+  const [bag, setBag] = useLocalStorage<ProductType[]>("bag:ignite:shop", []);
+  const [bagCount, setCount] = useLocalStorage<number>(
+    "bag:count:ignite:shop",
+    0
+  );
+  const [sumTotalPrice, setSumTotalPrice] = useLocalStorage<number>(
+    "bag:sum:price:ignite:shop",
+    0
+  );
 
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
 
