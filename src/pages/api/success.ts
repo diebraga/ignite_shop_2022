@@ -2,12 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import { stripe } from "../../lib/stripe";
 
-export type ProductType = {};
-export type SessionType = {
-  line_items: {
-    // data:
-  };
-};
 const success = async (req: NextApiRequest, res: NextApiResponse) => {
   const { sessionID } = req.query;
 
@@ -29,16 +23,23 @@ const success = async (req: NextApiRequest, res: NextApiResponse) => {
   const costumerName = session.customer_details?.name;
 
   const products = session.line_items?.data.map((item) => {
-    const product = item.price?.product as Stripe.Product
+    const product = item.price?.product as Stripe.Product;
     return {
       productName: item.description,
-      image: product.images[0]
+      image: product.images[0],
+      id: product.id,
+      product,
     };
   });
 
+  const quantityItems = session.line_items?.data.reduce((prev, cur) => {
+    return prev + Number(cur.quantity);
+  }, 0);
+
   return res.status(201).json({
     costumerName,
-    products
+    products,
+    quantity: quantityItems,
   });
 };
 

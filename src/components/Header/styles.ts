@@ -8,7 +8,7 @@ export const HeaderContainer = styled("header", {
   // background: "red",
 
   display: "flex",
-  justifyContent: "space-between",
+  // justifyContent: "space-between",
   alignItems: "center",
 });
 

@@ -9,6 +9,11 @@ export const {
   createTheme,
   getCssText,
 } = createStitches({
+  utils: {
+    justifyContent: (value: "space-between" | "center") => ({
+      justifyContent: value,
+    }),
+  },
   theme: {
     colors: {
       white: "#fff",

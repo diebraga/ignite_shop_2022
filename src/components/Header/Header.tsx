@@ -12,11 +12,18 @@ import Link from "next/link";
 type HeaderProps = {
   toggleDrawer: () => void;
   bagCount: number;
+  isSuccessPage: boolean;
 };
 
-const Header: React.FC<HeaderProps> = ({ toggleDrawer, bagCount }) => {
+const Header: React.FC<HeaderProps> = ({
+  toggleDrawer,
+  bagCount,
+  isSuccessPage,
+}) => {
   return (
-    <HeaderContainer>
+    <HeaderContainer
+      css={{ justifyContent: isSuccessPage ? "center" : "space-between" }}
+    >
       <Link href="/">
         <Image
           style={{ cursor: "pointer" }}
@@ -26,16 +33,18 @@ const Header: React.FC<HeaderProps> = ({ toggleDrawer, bagCount }) => {
           alt=""
         />
       </Link>
-      <BagContainer>
-        {bagCount > 0 && (
-          <PointNotification>
-            <p>{bagCount}</p>
-          </PointNotification>
-        )}
-        <BagLink onClick={toggleDrawer}>
-          <OutlineBag />
-        </BagLink>
-      </BagContainer>
+      {!isSuccessPage && (
+        <BagContainer>
+          {bagCount > 0 && (
+            <PointNotification>
+              <p>{bagCount}</p>
+            </PointNotification>
+          )}
+          <BagLink onClick={toggleDrawer}>
+            <OutlineBag />
+          </BagLink>
+        </BagContainer>
+      )}
     </HeaderContainer>
   );
 };

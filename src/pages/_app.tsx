@@ -11,6 +11,7 @@ import { ProductType } from ".";
 import { formatPrice } from "../utils/formatPrice";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { v4 as uuid } from "uuid";
+import { useRouter } from "next/router";
 
 const Drawer = dynamic(() => import("../components/Drawer/Drawer"), {
   ssr: false,
@@ -19,6 +20,13 @@ const Drawer = dynamic(() => import("../components/Drawer/Drawer"), {
 globalStyles();
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { pathname } = useRouter();
+
+  const isSuccessPage = (): boolean => {
+    if (pathname === "/success") return true;
+    else return false;
+  };
+  console.log(isSuccessPage())
   const [bag, setBag] = useLocalStorage<ProductType[]>("bag:ignite:shop", []);
   const [bagCount, setCount] = useLocalStorage<number>(
     "bag:count:ignite:shop",
@@ -67,7 +75,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         totalPrice={formatPrice(sumTotalPrice)}
         removeFromBag={removeFromBag}
       />
-      <Header toggleDrawer={toggleDrawer} bagCount={bagCount} />
+      <Header toggleDrawer={toggleDrawer} bagCount={bagCount} isSuccessPage={isSuccessPage()}/>
       <Component {...pageProps} addToBag={addToBag} emptyBag={emptyBag} />
     </Container>
   );
