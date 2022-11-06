@@ -1,4 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Ignite Shop
+
+<img width="1704" alt="Screenshot 2022-11-04 at 20 05 41" src="https://user-images.githubusercontent.com/52054459/200176756-f34c8511-841b-42aa-b1b7-0d2829a9bdd5.png">
+
+<img width="1704" alt="Screenshot 2022-11-04 at 20 06 09" src="https://user-images.githubusercontent.com/52054459/200176777-1b09f129-2836-40bb-8743-e9b42a80faad.png">
+
+<img width="1704" alt="Screenshot 2022-11-06 at 14 25 17" src="https://user-images.githubusercontent.com/52054459/200176790-9e3e1db2-b21f-4dc7-aeee-34a9366fa6dc.png">
+
+<img width="812" alt="Screenshot 2022-11-04 at 20 05 06" src="https://user-images.githubusercontent.com/52054459/200176802-608dc797-fbff-42b0-81fe-4f5bf9d9dbfc.png">
+
 
 ## Getting Started
 
